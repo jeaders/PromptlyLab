@@ -23,7 +23,7 @@ Curato per ChatGPT, Claude, Gemini, Midjourney e ogni altro modello.
 
 <br />
 
-[Panoramica](#panoramica) · [Screenshot](#screenshot) · [Avvio rapido](#avvio-rapido) · [API](#api) · [Struttura](#struttura-del-progetto)
+[Panoramica](#panoramica) · [100% free](#100-free--unlimited--no-api-keys-required) · [Screenshot](#screenshot) · [Avvio rapido](#avvio-rapido) · [API](#api) · [Struttura](#struttura-del-progetto)
 
 </div>
 
@@ -56,6 +56,38 @@ obiettivo  ──▶  analisi  ──▶  struttura  ──▶  prompt  ──�
 
 Il motore di generazione è **deterministico e locale** per default: nessun prompt esce dalla macchina.
 Se configuri `HF_TOKEN`, la generazione può avvalersi di un modello remoto — sempre in modo opzionale.
+
+---
+
+## 100% free & unlimited — no API keys required
+
+**PromptlyLab non richiede alcuna chiave API, alcun account e non ha limiti di utilizzo.**
+La generazione gira interamente sul tuo server: è codice, non un servizio a consumo.
+
+```text
+obiettivo ──▶ buildPrompt() ──▶ prompt + quality score
+              regole, cataloghi, pattern     (locale, illimitato)
+                     ▲
+                     └── HF_TOKEN (opzionale, con fallback automatico)
+```
+
+| Cosa | Richiede | Costo | Limiti |
+| --- | --- | --- | --- |
+| **Generazione prompt** | niente | **0 €** | **nessuno** |
+| Quality score e analisi | niente | **0 €** | nessuno |
+| Libreria (2.000+ prompt) | niente | **0 €** | nessuno |
+| Cronologia, preferiti | PostgreSQL | 0 € su free tier | — |
+| Seed community | niente | 0 € | un download pubblico, una volta |
+| Miglioramento con LLM | `HF_TOKEN` | a consumo | opzionale, con fallback |
+
+**Perché è illimitato:** nessuna chiamata a un provider AI, nessun token da contare, nessuna quota.
+L'unica dipendenza esterna è il database (gratis su Neon/Supabase free tier).
+
+**E se il provider remoto fallisce?** Il codice torna automaticamente al motore locale
+(`provider: "local"`): il prompt viene generato lo stesso, l'app non si blocca mai.
+
+> Nessuna carta di credito, nessun `sk-...` nel repo, nessuna telemetria.
+> Clona, avvia, usa quanto vuoi.
 
 ---
 
