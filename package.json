@@ -1,6 +1,9 @@
 {
-  "name": "nextjs-postgresql-template",
+  "name": "promptlylab",
+  "version": "1.0.0",
   "private": true,
+  "license": "MIT",
+  "author": "Alex Mirici (https://alexmirici.netlify.app)",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

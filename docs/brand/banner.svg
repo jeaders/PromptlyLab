@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-label="PromptlyLab — dall'idea al prompt perfetto">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111510"/>
+      <stop offset="0.55" stop-color="#131810"/>
+      <stop offset="1" stop-color="#0c110c"/>
+    </linearGradient>
+    <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse">
+      <path d="M44 0H0V44" fill="none" stroke="#ffffff" stroke-opacity="0.045" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#c8f451" stop-opacity="0.26"/>
+      <stop offset="1" stop-color="#c8f451" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0.12"/>
+    </linearGradient>
+    <mask id="gridmask">
+      <rect width="1280" height="360" fill="url(#fade)"/>
+    </mask>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="28"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="360" fill="url(#bg)"/>
+  <rect width="1280" height="360" fill="url(#grid)" mask="url(#gridmask)"/>
+  <circle cx="990" cy="180" r="240" fill="url(#glow)"/>
+
+  <!-- brand -->
+  <g transform="translate(72,56)">
+    <rect width="52" height="52" rx="14" fill="#c8f451" transform="rotate(-5 26 26)"/>
+    <g transform="translate(14,14)" fill="#17200f">
+      <path d="M12 2.6l2.05 6.1 6.1 2.05-6.1 2.05L12 18.9l-2.05-6.1-6.1-2.05 6.1-2.05L12 2.6z"/>
+      <path d="M18.6 14.4l.95 2.75 2.75.95-2.75.95-.95 2.75-.95-2.75-2.75-.95 2.75-.95.95-2.75z" opacity="0.85"/>
+    </g>
+    <text x="72" y="35" font-family="Helvetica Neue, Arial, sans-serif" font-size="38" font-weight="800" letter-spacing="-1.6" fill="#ffffff">promptly</text>
+    <rect x="234" y="9" width="54" height="28" rx="7" fill="none" stroke="#c8f451" stroke-opacity="0.45"/>
+    <text x="261" y="29" font-family="Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="2" fill="#c8f451" text-anchor="middle">LAB</text>
+  </g>
+
+  <!-- headline -->
+  <text x="72" y="188" font-family="Georgia, Times New Roman, serif" font-size="56" fill="#f8f9f4" letter-spacing="-1.6">Dall&#8217;idea al prompt</text>
+  <text x="72" y="254" font-family="Georgia, Times New Roman, serif" font-size="56" font-style="italic" fill="#c8f451" letter-spacing="-1.2">perfetto.</text>
+  <text x="72" y="292" font-family="Helvetica Neue, Arial, sans-serif" font-size="15" fill="#9aa294">Generatore di prompt professionali per ogni modello AI</text>
+  <text x="72" y="328" font-family="Menlo, Consolas, monospace" font-size="10.5" letter-spacing="0.6" fill="#6d776b">Next.js 16 &#183; PostgreSQL &#183; Drizzle ORM &#183; TypeScript &#183; MIT License</text>
+
+  <!-- prompt window -->
+  <g transform="translate(772,48) rotate(1.5 220 140)">
+    <rect x="12" y="18" width="440" height="280" rx="20" fill="#000000" opacity="0.55" filter="url(#soft)"/>
+    <rect width="440" height="280" rx="18" fill="#fafaf6"/>
+    <path d="M0 18a18 18 0 0 1 18-18h404a18 18 0 0 1 18 18v20H0z" fill="#e9ebe4"/>
+    <line x1="0" y1="38" x2="440" y2="38" stroke="#d9dcd3"/>
+    <g fill="#b9beb5">
+      <circle cx="20" cy="19" r="4"/><circle cx="34" cy="19" r="4"/><circle cx="48" cy="19" r="4"/>
+    </g>
+    <text x="220" y="23" font-family="Menlo, Consolas, monospace" font-size="9" fill="#8b9289" text-anchor="middle">promptly / blueprint</text>
+
+    <text x="26" y="74" font-family="Menlo, Consolas, monospace" font-size="8.5" letter-spacing="1.6" fill="#7d8a70">&#9679; LEARNS FROM YOUR LIBRARY</text>
+    <text x="26" y="108" font-family="Georgia, Times New Roman, serif" font-size="26" fill="#20261e">Launch strategy for a</text>
+    <text x="26" y="137" font-family="Georgia, Times New Roman, serif" font-size="26" font-style="italic" fill="#537025">meaningful product.</text>
+    <g fill="#d9ded5">
+      <rect x="26" y="153" width="340" height="4" rx="2"/>
+      <rect x="26" y="164" width="248" height="4" rx="2"/>
+    </g>
+
+    <g>
+      <rect x="26" y="182" width="186" height="42" rx="8" fill="#f5f5f0" stroke="#dcdfd7"/>
+      <text x="38" y="197" font-family="Menlo, Consolas, monospace" font-size="7.5" fill="#8da340">01</text>
+      <text x="58" y="197" font-family="Helvetica Neue, Arial, sans-serif" font-size="9" font-weight="700" fill="#2f362c">Role</text>
+      <text x="58" y="209" font-family="Helvetica Neue, Arial, sans-serif" font-size="7" fill="#868c83">Strategist</text>
+
+      <rect x="224" y="182" width="186" height="42" rx="8" fill="#f5f5f0" stroke="#dcdfd7"/>
+      <text x="236" y="197" font-family="Menlo, Consolas, monospace" font-size="7.5" fill="#8da340">02</text>
+      <text x="256" y="197" font-family="Helvetica Neue, Arial, sans-serif" font-size="9" font-weight="700" fill="#2f362c">Context</text>
+      <text x="256" y="209" font-family="Helvetica Neue, Arial, sans-serif" font-size="7" fill="#868c83">Market &amp; audience</text>
+    </g>
+
+    <rect x="26" y="236" width="384" height="30" rx="8" fill="#eaf7c9"/>
+    <circle cx="42" cy="251" r="4" fill="#7fa62a"/>
+    <text x="54" y="255" font-family="Helvetica Neue, Arial, sans-serif" font-size="9.5" font-weight="700" fill="#45562b">Prompt pronto all&#8217;uso</text>
+    <text x="394" y="255" font-family="Menlo, Consolas, monospace" font-size="9" font-weight="700" fill="#5c7223" text-anchor="end">94/100</text>
+  </g>
+</svg>
