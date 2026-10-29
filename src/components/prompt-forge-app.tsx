@@ -161,7 +161,7 @@ export default function PromptForgeApp() {
       <footer>
         <div className="brand"><span className="brand-mark"><Sparkles size={18} /></span><span>promptly</span><i>lab</i></div>
         <p>{t.footer}</p>
-        <div><span><ShieldCheck size={14} />{t.privacy}</span><span><Zap size={14} />{t.powered}</span></div>
+        <div><span><ShieldCheck size={14} />{t.privacy}</span><span><Zap size={14} />{t.powered}</span><span className="credit">Made by <a href="https://alexmirici.netlify.app" target="_blank" rel="noopener noreferrer">Alex Mirici</a></span></div>
       </footer>
 
       <nav className="mobile-bottom-nav" aria-label="Mobile">
