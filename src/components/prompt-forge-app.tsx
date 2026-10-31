@@ -90,6 +90,9 @@ export default function PromptForgeApp() {
 
   return (
     <main>
+      <a href="#top" className="skip-link" tabIndex={0}>
+        Vai al contenuto principale
+      </a>
       <header className="topbar">
         <a className="brand" href="#top" aria-label="Promptly home"><span className="brand-mark"><Sparkles size={18} /></span><span>promptly</span><i>lab</i></a>
         <nav className="desktop-nav" aria-label="Primary">

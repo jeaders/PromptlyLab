@@ -38,6 +38,7 @@ const it = {
   error: "Qualcosa non ha funzionato. Riprova.", goalShort: "Descrivi meglio il tuo obiettivo (almeno 8 caratteri).", learnShort: "Inserisci un titolo e un prompt di almeno 30 caratteri.",
   footer: "Prompt migliori. Risultati migliori.", privacy: "Nessun account richiesto", powered: "AI opzionale, sempre funzionante",
   concise: "Essenziale", balanced: "Bilanciato", deep: "Approfondito",
+  skipToContent: "Vai al contenuto principale", navHome: "Home",
 };
 
 export type Dict = typeof it;
@@ -82,6 +83,7 @@ const en: Dict = {
   error: "Something went wrong. Please try again.", goalShort: "Describe your goal in at least 8 characters.", learnShort: "Add a title and a prompt of at least 30 characters.",
   footer: "Better prompts. Better outcomes.", privacy: "No account required", powered: "Optional AI, always works",
   concise: "Concise", balanced: "Balanced", deep: "In-depth",
+  skipToContent: "Skip to main content", navHome: "Home",
 };
 
 export const dictionaries = { it, en };
