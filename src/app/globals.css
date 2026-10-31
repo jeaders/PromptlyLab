@@ -83,3 +83,76 @@ button,a,[role="button"],input,select,textarea{margin:0}button{min-height:44px;m
   .result-actions{flex-direction:column}
   .result-actions button{width:100%;justify-content:center}
 }
+
+/* ---------- mobile app-like ---------- */
+@media (max-width:780px){
+  .topbar{height:56px;padding:0 14px}
+  .brand{font-size:17px}
+  .header-cta{padding:8px 11px;font-size:11px}
+  .mobile-menu{top:55px}
+  .hero{min-height:auto;padding:92px 16px 0}
+  .hero h1{font-size:clamp(36px,11vw,52px);line-height:1.1;margin:20px 0 18px}
+  .hero-copy>p{font-size:15px;line-height:1.55;max-width:none}
+  .hero-actions{flex-direction:column;gap:12px;width:100%}
+  .hero-actions .primary-button,.hero-actions .text-button{width:100%;justify-content:center;padding:13px}
+  .model-row{margin-top:32px}
+  .model-row>div{gap:10px;justify-content:center}
+  .model-row b{font-size:10px}
+  .hero-visual{min-height:300px}
+  .prompt-window{width:100%}
+  .floating-chip{display:none}
+  .hero-stats{margin:26px 0 0;display:flex;gap:10px;overflow-x:auto;padding-bottom:8px}
+  .hero-stats div{min-width:unset;flex:none;padding:0;margin:0}
+  .hero-stats div strong{font-size:17px}
+  .hero-stats div span{font-size:11px}
+  .generator-section{padding:60px 14px 80px}
+  .builder-card{padding:18px}
+  .goal-input{min-height:150px;font-size:16px}
+  .field-label{font-size:11px;margin-bottom:8px}
+  .model-chips{justify-content:center;margin-bottom:12px}
+  .model-chips button{min-height:40px;padding:9px 14px;font-size:12px}
+  .form-grid{grid-template-columns:1fr;gap:12px}
+  .select-wrap select{font-size:16px;padding:12px 32px 12px 12px}
+  .advanced-toggle{padding:15px 2px 4px}
+  .advanced-panel{padding:0 4px}
+  .generate-button{width:100%;padding:16px;font-size:16px}
+  .result-card{padding:18px}
+  .result-head{flex-direction:column;align-items:flex-start;gap:10px}
+  .provider-badge{align-self:flex-start}
+  .result-actions{flex-direction:column}
+  .result-actions button{width:100%;padding:14px;font-size:14px;justify-content:center}
+  .result-actions .copy-main{width:100%}
+  .open-in{width:100%;justify-content:center;padding:0 0 12px}
+  .open-in a{min-height:40px;padding:10px 14px;font-size:12px}
+  .quality-panel>div{grid-template-columns:1fr;gap:6px}
+  .refs button{min-height:38px;padding:9px 12px;font-size:11px}
+  .library-section{padding:60px 14px 90px}
+  .library-top{align-items:flex-start;gap:12px}
+  .library-top .learn-button{width:100%;justify-content:center;padding:11px}
+  .library-tools{flex-direction:column;gap:10px}
+  .search-box input{font-size:16px;padding:13px 36px}
+  .source-tabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px}
+  .source-tabs button{padding:10px 14px;font-size:12px;white-space:nowrap}
+  .category-scroll{gap:6px}
+  .category-scroll button{padding:8px 12px;font-size:11px}
+  .prompt-grid{grid-template-columns:1fr;gap:16px}
+  .prompt-card{padding:20px;min-height:340px}
+  .card-top{flex-direction:column;align-items:flex-start;gap:10px}
+  .card-badges{align-self:flex-end}
+  .prompt-card h3{font-size:17px}
+  .prompt-card>p{font-size:14px}
+  .card-footer{flex-direction:column;gap:8px;align-items:stretch}
+  .card-footer button{width:100%;justify-content:center;padding:12px;font-size:13px}
+  .load-more button{width:100%;padding:14px;font-size:14px}
+  .footer{flex-direction:column;gap:16px;text-align:center;padding:30px 16px}
+  .footer>div:last-child{flex-direction:column;gap:10px;align-items:center}
+  .footer .credit{margin-top:8px}
+  .mobile-bottom-nav{height:58px}
+  .mobile-bottom-nav button{font-size:9px}
+  .modal.sheet,.modal.sheet.wide{width:100%;max-height:95vh;border-radius:16px 16px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom))}
+  .sheet-title h2{font-size:22px}
+  .sheet-pre{font-size:14px;padding:16px}
+  .sheet-actions{flex-direction:column}
+  .sheet-actions>button{width:100%;padding:14px;font-size:14px}
+  .history-actions button{height:40px;padding:0 12px;font-size:11px}
+}

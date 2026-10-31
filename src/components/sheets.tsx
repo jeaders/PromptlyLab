@@ -8,6 +8,17 @@ import type { Dict } from "@/lib/i18n";
 import type { Generation, PromptItem } from "@/lib/types";
 import { HighlightedPrompt, OPEN_IN, ScoreRing, catClass, categoryIcons, copyToClipboard } from "./ui";
 
+const HISTORY_KEY = "promptly:history";
+
+function loadItems(tab: "recent" | "fav"): Generation[] {
+  try {
+    const raw = localStorage.getItem(HISTORY_KEY);
+    const all: Generation[] = raw ? JSON.parse(raw) : [];
+    const filtered = tab === "fav" ? all.filter((x) => x.favorite) : all;
+    return filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  } catch { return []; }
+}
+
 function Sheet({ onClose, children, label, wide }: { onClose: () => void; children: ReactNode; label: string; wide?: boolean }) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
@@ -80,30 +91,30 @@ export function PromptSheet({ prompt, lang, t, onClose, onUse }: { prompt: Promp
 
 export function HistorySheet({ lang, t, onClose, onToast }: { lang: Language; t: Dict; onClose: () => void; onToast: (m: string) => void }) {
   const [tab, setTab] = useState<"recent" | "fav">("recent");
-  const [items, setItems] = useState<Generation[] | null>(null);
+  const [version, setVersion] = useState(0);
   const [copiedId, setCopiedId] = useState<number | null>(null);
 
-  useEffect(() => {
-    let active = true;
-    fetch(`/api/generations${tab === "fav" ? "?favorites=1" : ""}`)
-      .then((r) => { if (!r.ok) throw new Error(); return r.json() as Promise<{ items: Generation[] }>; })
-      .then((d) => { if (active) setItems(d.items); })
-      .catch(() => { if (active) { setItems([]); onToast(t.error); } });
-    return () => { active = false; };
-  }, [tab, onToast, t.error]);
+  const items = loadItems(tab);
 
   async function toggleFav(g: Generation) {
-    const favorite = !g.favorite;
-    setItems((cur) => cur?.map((x) => (x.id === g.id ? { ...x, favorite } : x)).filter((x) => tab === "recent" || x.favorite) ?? null);
-    const r = await fetch(`/api/generations/${g.id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ favorite }) });
-    if (!r.ok) onToast(t.error);
+    try {
+      const raw = localStorage.getItem(HISTORY_KEY);
+      const all: Generation[] = raw ? JSON.parse(raw) : [];
+      const next = all.map((x) => (x.id === g.id ? { ...x, favorite: !x.favorite } : x));
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(next));
+      setVersion((v) => v + 1);
+    } catch { onToast(t.error); }
   }
 
   async function remove(id: number) {
-    const r = await fetch(`/api/generations/${id}`, { method: "DELETE" });
-    if (!r.ok) return onToast(t.error);
-    setItems((cur) => cur?.filter((x) => x.id !== id) ?? null);
-    onToast(t.deleted);
+    try {
+      const raw = localStorage.getItem(HISTORY_KEY);
+      const all: Generation[] = raw ? JSON.parse(raw) : [];
+      const next = all.filter((x) => x.id !== id);
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(next));
+      setVersion((v) => v + 1);
+      onToast(t.deleted);
+    } catch { onToast(t.error); }
   }
 
   async function copy(g: Generation) {
@@ -114,13 +125,12 @@ export function HistorySheet({ lang, t, onClose, onToast }: { lang: Language; t:
     <Sheet onClose={onClose} label={t.historyTitle} wide>
       <h2 className="sheet-h2">{t.historyTitle}</h2>
       <div className="mode-tabs small">
-        <button className={tab === "recent" ? "active" : ""} onClick={() => { setItems(null); setTab("recent"); }}>{t.recent}</button>
-        <button className={tab === "fav" ? "active" : ""} onClick={() => { setItems(null); setTab("fav"); }}><Bookmark size={13} />{t.favorites}</button>
+        <button className={tab === "recent" ? "active" : ""} onClick={() => setTab("recent")}>{t.recent}</button>
+        <button className={tab === "fav" ? "active" : ""} onClick={() => setTab("fav")}><Bookmark size={13} />{t.favorites}</button>
       </div>
       <div className="history-list">
-        {items === null ? <div className="history-loading"><LoaderCircle className="spin" size={20} /></div>
-          : items.length === 0 ? <p className="history-empty">{tab === "fav" ? t.favEmpty : t.historyEmpty}</p>
-          : items.map((g) => {
+      {items.length === 0 ? <p className="history-empty">{tab === "fav" ? t.favEmpty : t.historyEmpty}</p>
+        : items.map((g) => {
             const model = TARGET_MODELS.find((m) => m.id === g.targetModel);
             return (
               <article key={g.id} className="history-item">

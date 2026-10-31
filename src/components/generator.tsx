@@ -11,8 +11,10 @@ import {
   isCategory, isImageModel, type AspectRatio, type Category, type Language, type TargetModel, type Technique,
 } from "@/lib/catalog";
 import type { Dict } from "@/lib/i18n";
-import type { GenerateResponse, Preset } from "@/lib/types";
+import type { GenerateResponse, Generation, Preset } from "@/lib/types";
 import { HighlightedPrompt, OPEN_IN, ScoreRing, copyToClipboard } from "./ui";
+
+const HISTORY_KEY = "promptly:history";
 
 type Props = {
   lang: Language; t: Dict; preset: Preset | null;
@@ -49,6 +51,27 @@ export default function Generator({ lang, t, preset, onToast, onGenerated, onOpe
     if (isImageModel(id)) setCategory("Immagini");
   }
 
+  function saveToHistory(res: GenerateResponse) {
+    try {
+      const raw = localStorage.getItem(HISTORY_KEY);
+      const all: Generation[] = raw ? JSON.parse(raw) : [];
+      const entry: Generation = {
+        id: res.generation.id,
+        goal,
+        result: res.generation.result,
+        category,
+        targetModel,
+        mode,
+        score: res.analysis?.score ?? 0,
+        favorite: res.generation.favorite,
+        learned: res.generation.learned,
+        createdAt: new Date().toISOString(),
+      };
+      const next = [entry, ...all.filter((x) => x.id !== entry.id)];
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(next.slice(0, 200)));
+    } catch { /* storage unavailable */ }
+  }
+
   async function generate() {
     if (goal.trim().length < 8) return onToast(t.goalShort);
     setLoading(true);
@@ -61,8 +84,10 @@ export default function Generator({ lang, t, preset, onToast, onGenerated, onOpe
         body: JSON.stringify({ goal, category, tone, language: lang, detailLevel: detail, context, audience, outputFormat, targetModel, techniques, aspectRatio, mode }),
       });
       if (!response.ok) throw new Error();
-      setRes((await response.json()) as GenerateResponse);
+      const saved = (await response.json()) as GenerateResponse;
+      setRes(saved);
       onGenerated();
+      saveToHistory(saved);
       requestAnimationFrame(() => document.getElementById("result-panel")?.scrollIntoView({ behavior: "smooth", block: "nearest" }));
     } catch {
       onToast(t.error);
