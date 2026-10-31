@@ -38,14 +38,14 @@ const B: Record<Category, Blueprint> = {
 };
 
 const L = {
-  it: { role: "RUOLO", objective: "OBIETTIVO", context: "CONTESTO", audience: "Pubblico", method: "METODO", requirements: "REQUISITI", output: "FORMATO DI OUTPUT", examples: "ESEMPI", patterns: "PATTERN APPRESI DALLA LIBRERIA", check: "CONTROLLO QUALITÀ", actAs: "Agisci come", tone: "Tono", noContext: "Individua il contesto mancante e formula solo assunzioni ragionevoli ed esplicite.",
+  it: { role: "RUOLO", objective: "OBIETTIVO", context: "CONTESTO", audience: "Pubblico", method: "METODO", requirements: "REQUISITI", output: "FORMATO DI OUTPUT", examples: "ESEMPI", creative: "ESPANSIONE CREATIVA", patterns: "PATTERN APPRESI DALLA LIBRERIA", check: "CONTROLLO QUALITÀ", actAs: "Agisci come", tone: "Tono", noContext: "Individua il contesto mancante e formula solo assunzioni ragionevoli ed esplicite.",
     detail: { concise: "Sii essenziale: massimo 5 punti, nessun preambolo.", balanced: "Bilancia sintesi e profondità; motiva le decisioni importanti.", deep: "Approfondisci: considera casi limite, alternative e implicazioni." },
     steps: ["Riformula il risultato atteso in una frase precisa.", "Dividi il lavoro in passaggi logici ordinati per impatto.", "Produci un risultato concreto e immediatamente utilizzabile."],
     base: ["Preferisci dettagli, esempi e criteri misurabili ai consigli generici.", "Non inventare dati, fonti o capacità; dichiara le incertezze."],
     finalCheck: "Prima di rispondere verifica accuratezza, completezza, pertinenza e applicabilità. Restituisci solo la risposta finale.",
     tech: { clarify: "Prima di iniziare fammi al massimo 3 domande mirate e attendi le risposte.", stepByStep: "Ragiona passo dopo passo; mostra una breve sintesi del ragionamento prima della risposta finale.", examples: "Esempio 1 dell'output desiderato: [INCOLLA UN ESEMPIO]\nEsempio 2: [INCOLLA UN ESEMPIO]\nSegui stile, struttura e livello di dettaglio degli esempi.", selfCritique: "Dopo la bozza, criticala rispetto all'obiettivo e ai requisiti, poi consegna solo la versione migliorata.", variants: "Fornisci 3 varianti distinte (A, B, C) e indica quando usare ciascuna.", sources: "Cita fonti verificabili (titolo, autore, data, URL) e segnala ciò che non è verificato." },
   },
-  en: { role: "ROLE", objective: "OBJECTIVE", context: "CONTEXT", audience: "Audience", method: "METHOD", requirements: "REQUIREMENTS", output: "OUTPUT FORMAT", examples: "EXAMPLES", patterns: "PATTERNS LEARNED FROM THE LIBRARY", check: "QUALITY CHECK", actAs: "Act as", tone: "Tone", noContext: "Identify missing context and make only reasonable, explicit assumptions.",
+  en: { role: "ROLE", objective: "OBJECTIVE", context: "CONTEXT", audience: "Audience", method: "METHOD", requirements: "REQUIREMENTS", output: "OUTPUT FORMAT", examples: "EXAMPLES", creative: "CREATIVE EXPANSION", patterns: "PATTERNS LEARNED FROM THE LIBRARY", check: "QUALITY CHECK", actAs: "Act as", tone: "Tone", noContext: "Identify missing context and make only reasonable, explicit assumptions.",
     detail: { concise: "Be concise: up to 5 points, no preamble.", balanced: "Balance brevity and depth; explain important decisions.", deep: "Go deep: consider edge cases, alternatives and implications." },
     steps: ["Restate the intended outcome in one precise sentence.", "Break the work into logical steps ordered by impact.", "Produce a concrete, immediately usable result."],
     base: ["Prefer specifics, examples and measurable criteria over generic advice.", "Never fabricate data, sources or capabilities; flag uncertainty."],
@@ -65,6 +65,26 @@ const IMAGE_STYLE: Record<string, string> = {
   Empatico: "intimate, gentle, golden hour light",
 };
 const NEGATIVE = "text, watermark, logo, signature, blurry, low resolution, extra fingers, deformed anatomy, duplicate elements, oversaturated, plastic skin";
+
+const CREATIVE: Record<Category, [string, string]> = {
+  Marketing: ["Genera 3 angoli creativi e inediti per il mercato target, poi sviluppa il più promettente con dettagli operativi.", "Generate 3 novel and unprecedented creative angles for the target market, then develop the most promising one with operational detail."],
+  Scrittura: ["Proponi 3 direzioni narrative o stilistiche originali e inaspettate, poi sviluppa la migliore.", "Propose 3 original and unexpected narrative or stylistic directions, then develop the best one."],
+  Immagini: ["Immagina 3 composizioni visive inedite e originali, poi dettaglia la più forte.", "Imagine 3 novel and original visual compositions, then detail the strongest one."],
+  Video: ["Proponi 3 hook o strutture narrative non convenzionali, poi sviluppa la più efficace.", "Propose 3 unconventional hook or narrative structures, then develop the most effective one."],
+  Audio: ["Inventa 3 direzioni sonore o musicali originali, poi sviluppa la più interessante.", "Invent 3 original sound or musical directions, then develop the most interesting one."],
+  Sviluppo: ["Proponi 3 approcci architetturali o di design non ovvi, poi sviluppa il più robusto.", "Propose 3 non-obvious architectural or design approaches, then develop the most robust one."],
+  Dati: ["Formula 3 ipotesi non ovvie e 3 visualizzazioni inedite, poi sviluppa la più rivelatrice.", "Formulate 3 non-obvious hypotheses and 3 novel visualizations, then develop the most revealing one."],
+  Design: ["Immagina 3 soluzioni di interazione originali e non convenzionali, poi sviluppa la migliore.", "Imagine 3 original and unconventional interaction solutions, then develop the best one."],
+  Business: ["Genera 3 modelli di business o strategie non convenzionali, poi sviluppa il più promettente.", "Generate 3 unconventional business models or strategies, then develop the most promising one."],
+  Ricerca: ["Formula 3 domande di ricerca inedite e 3 prospettive non ovvie, poi sviluppa la più rilevante.", "Formulate 3 novel research questions and 3 non-obvious perspectives, then develop the most relevant one."],
+  Studio: ["Crea 3 analogie o metafore originali per spiegare il concetto, poi sviluppa la più efficace.", "Create 3 original analogies or metaphors to explain the concept, then develop the most effective one."],
+  Produttività: ["Proponi 3 sistemi o workflow inediti, poi sviluppa il più sostenibile.", "Propose 3 novel systems or workflows, then develop the most sustainable one."],
+  Carriera: ["Immagina 3 narrazioni professionali originali, poi sviluppa la più convincente.", "Imagine 3 original professional narratives, then develop the most compelling one."],
+  Lifestyle: ["Proponi 3 approcci inediti e personalizzati, poi sviluppa il più realistico.", "Propose 3 novel and personalized approaches, then develop the most realistic one."],
+  Giochi: ["Inventa almeno 5 concept di gioco MAI ESISTITI, con meccaniche originali e inedite, poi sviluppa il più originale in dettaglio completo.", "Invent at least 5 game concepts that have NEVER EXISTED, with original and unprecedented mechanics, then fully develop the most original one."],
+  Altro: ["Genera 3 approcci originali e inediti al problema, poi sviluppa il più efficace.", "Generate 3 original and unprecedented approaches to the problem, then develop the most effective one."],
+};
+
 
 function section(title: string, body: string, xml: boolean) {
   if (xml) {
@@ -112,6 +132,7 @@ export function buildPrompt(input: GenerateInput, patterns: string[] = []) {
 
   parts.push(section(l.role, `${l.actAs} ${bp.role[idx]}.`, xml));
   parts.push(section(l.objective, input.goal.trim(), xml));
+  parts.push(section(l.creative, CREATIVE[input.category][idx], xml));
   const ctx = [input.context?.trim() || l.noContext];
   if (input.audience?.trim()) ctx.push(`${l.audience}: ${input.audience.trim()}.`);
   parts.push(section(l.context, ctx.join("\n"), xml));
