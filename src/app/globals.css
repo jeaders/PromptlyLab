@@ -51,9 +51,11 @@ button,a,[role="button"],input,select,textarea{margin:0}button{min-height:44px;m
   body{padding-bottom:60px;overflow-x:hidden}
   .topbar{height:56px;padding:0 12px}
   .brand{font-size:17px}
+  .desktop-nav{display:none!important}
   .header-cta{display:none}
-  .menu-button{display:block;padding:6px}
-  .mobile-menu{display:flex;position:absolute;top:55px;left:10px;right:10px;background:#20271f;border:1px solid #384137;border-radius:12px;padding:10px;flex-direction:column;gap:6px;box-shadow:0 18px 40px rgba(0,0,0,.35);z-index:30}
+  .menu-button{display:flex;align-items:center;justify-content:center;padding:6px;width:40px;height:40px;color:#fff}
+  .mobile-menu{display:flex;position:fixed;top:56px;left:10px;right:10px;background:#20271f;border:1px solid #384137;border-radius:12px;padding:10px;flex-direction:column;gap:6px;box-shadow:0 18px 40px rgba(0,0,0,.45);z-index:100}
+  .topbar{position:fixed;top:0;left:0;right:0}
   .mobile-menu button{text-align:left;padding:14px 12px;font-size:15px;width:100%;border-radius:10px}
   .hero{min-height:auto;padding:84px 14px 0}
   .hero-inner{display:block;gap:0}
@@ -116,8 +118,11 @@ button,a,[role="button"],input,select,textarea{margin:0}button{min-height:44px;m
   .footer{flex-direction:column;gap:18px;text-align:center;padding:32px 16px}
   .footer>div:last-child{flex-direction:column;gap:12px;align-items:center}
   .footer .credit{margin-top:10px}
-  .mobile-bottom-nav{height:60px}
-  .mobile-bottom-nav button{font-size:10px}
+  .mobile-bottom-nav{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;bottom:0;left:0;right:0;height:60px;background:rgba(255,255,252,.97);backdrop-filter:blur(14px);border-top:1px solid #dcded7;z-index:60;padding-bottom:env(safe-area-inset-bottom)}
+  .mobile-bottom-nav button{position:relative;border:0;background:none;color:#737a71;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10px;min-height:60px}
+  .mobile-bottom-nav button:first-child{color:#344328}
+  .mobile-bottom-nav button:first-child svg{color:#749726}
+  .mobile-bottom-nav button svg{width:20px;height:20px}
   .modal-backdrop{place-items:end center;padding:0}
   .modal.sheet,.modal.sheet.wide{width:100%;max-height:95vh;border-radius:20px 20px 0 0;padding:22px 18px calc(22px + env(safe-area-inset-bottom));animation:sheetUp .25s ease}
   .sheet-handle{display:block;width:40px;height:4px;border-radius:4px;background:#d6d9d0;margin:-10px auto 14px}
