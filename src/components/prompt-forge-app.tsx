@@ -13,10 +13,22 @@ const FAV_KEY = "promptly:favorites";
 const LANG_KEY = "promptly:lang";
 
 export default function PromptForgeApp() {
-  const [lang, setLang] = useState<Language>("it");
+  const [lang, setLang] = useState<Language>(() => {
+    try {
+      const saved = localStorage.getItem(LANG_KEY);
+      if (saved === "it" || saved === "en") return saved;
+    } catch { /* storage unavailable */ }
+    return "it";
+  });
   const [stats, setStats] = useState<Stats | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
-  const [favorites, setFavorites] = useState<number[]>([]);
+  const [favorites, setFavorites] = useState<number[]>(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(FAV_KEY) ?? "[]") as unknown;
+      if (Array.isArray(saved)) return saved.filter((x): x is number => Number.isInteger(x));
+    } catch { /* storage unavailable */ }
+    return [];
+  });
   const [preset, setPreset] = useState<Preset | null>(null);
   const [openPrompt, setOpenPrompt] = useState<PromptItem | null>(null);
   const [showHistory, setShowHistory] = useState(false);
@@ -26,16 +38,6 @@ export default function PromptForgeApp() {
   const generatorRef = useRef<HTMLElement>(null);
   const libraryRef = useRef<HTMLElement>(null);
   const t = dictionaries[lang];
-
-  // Restore persisted preferences after hydration.
-  useEffect(() => {
-    try {
-      const savedLang = localStorage.getItem(LANG_KEY);
-      if (savedLang === "it" || savedLang === "en") setLang(savedLang);
-      const favs = JSON.parse(localStorage.getItem(FAV_KEY) ?? "[]") as unknown;
-      if (Array.isArray(favs)) setFavorites(favs.filter((x): x is number => Number.isInteger(x)));
-    } catch { /* storage unavailable */ }
-  }, []);
 
   useEffect(() => {
     document.documentElement.lang = lang;
@@ -49,7 +51,14 @@ export default function PromptForgeApp() {
     } catch { /* stats are non-critical */ }
   }, []);
 
-  useEffect(() => { void loadStats(); }, [loadStats, refreshKey]);
+  useEffect(() => {
+    void (async () => {
+      try {
+        const r = await fetch("/api/stats");
+        if (r.ok) setStats((await r.json()) as Stats);
+      } catch { /* stats are non-critical */ }
+    })();
+  }, [refreshKey]);
   useEffect(() => { if (!toast) return; const id = setTimeout(() => setToast(""), 3200); return () => clearTimeout(id); }, [toast]);
 
   const notify = useCallback((msg: string) => setToast(msg), []);

@@ -37,25 +37,27 @@ export default function Library({ lang, t, stats, refreshKey, favorites, onToggl
 
   useEffect(() => {
     const controller = new AbortController();
-    const params = new URLSearchParams({ page: String(page) });
-    if (category !== "Tutti") params.set("category", category);
-    if (query) params.set("q", query);
-    if (source === "favorites") params.set("ids", favKey || "0");
-    else if (source !== "all") params.set("source", source);
-    setLoading(true);
-    fetch(`/api/prompts?${params}`, { signal: controller.signal })
-      .then((r) => { if (!r.ok) throw new Error(); return r.json() as Promise<{ items: PromptItem[]; total: number; hasMore: boolean }>; })
-      .then((data) => {
+    void (async () => {
+      setLoading(true);
+      try {
+        const params = new URLSearchParams({ page: String(page) });
+        if (category !== "Tutti") params.set("category", category);
+        if (query) params.set("q", query);
+        if (source === "favorites") params.set("ids", favKey || "0");
+        else if (source !== "all") params.set("source", source);
+        const r = await fetch(`/api/prompts?${params}`, { signal: controller.signal });
+        if (!r.ok) throw new Error();
+        const data = (await r.json()) as { items: PromptItem[]; total: number; hasMore: boolean };
         setItems((cur) => (page === 1 ? data.items : [...cur, ...data.items.filter((n) => !cur.some((c) => c.id === n.id))]));
         setTotal(data.total);
         setHasMore(data.hasMore);
-        setLoading(false);
-      })
-      .catch((error: unknown) => {
-        if (error instanceof DOMException && error.name === "AbortError") return;
-        setLoading(false);
+      } catch {
+        if (controller.signal.aborted) return;
         onToast(t.error);
-      });
+      } finally {
+        if (!controller.signal.aborted) setLoading(false);
+      }
+    })();
     return () => controller.abort();
   }, [category, source, query, page, favKey, refreshKey, onToast, t.error]);
 
